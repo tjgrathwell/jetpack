@@ -62,7 +62,7 @@
               <Set name="trustStore"><% @settings.api_truststore %></Set>
               <Set name="trustStorePassword"><% @settings.api_truststore_password %></Set>
               <% end %>
-              <% if @settings.api_need_client_auth.present? %>
+              <% if !@settings.api_need_client_auth.nil? %>
               <Set name="needClientAuth"><%= @settings.api_need_client_auth %></Set>
               <% end %>
             </New>
