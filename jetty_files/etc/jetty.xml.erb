@@ -47,6 +47,33 @@
       </Arg>
     </Call>
 
+    <% if @settings.api_port %>
+    <Call name="addConnector">
+      <Arg>
+        <New class="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
+          <Arg>
+            <New class="org.eclipse.jetty.http.ssl.SslContextFactory">
+              <% if @settings.api_keystore && @settings.api_keystore_password %>
+              <Set name="keyStore"><% @settings.api_keystore %></Set>
+              <Set name="keyStorePassword"><% @settings.api_keystore_password %></Set>
+              <% end %>
+              <!-- <Set name="keyManagerPassword"><% @settings.api_keystore_password %></Set> -->
+              <% if @settings.api_truststore && @settings.api_truststore_password %>
+              <Set name="trustStore"><% @settings.api_truststore %></Set>
+              <Set name="trustStorePassword"><% @settings.api_truststore_password %></Set>
+              <% end %>
+              <% if @settings.api_need_client_auth.present? %>
+              <Set name="needClientAuth"><%= @settings.api_need_client_auth %></Set>
+              <% end %>
+            </New>
+          </Arg>
+          <Set name="port"><%=@settings.api_port%></Set>
+          <Set name="maxIdleTime">30000</Set>
+        </New>
+      </Arg>
+    </Call>
+    <% end %>
+
     <!-- set the rails.env java system property based on the RAILS_ENV environment variable -->
     <!-- this is used by jruby-rack to set Rails.env -->
     <Call class="java.lang.System" name="setProperty">

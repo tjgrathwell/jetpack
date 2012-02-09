@@ -23,6 +23,11 @@ module Jetpack
       contents["jruby"] =         user_defined_options["jruby"]           if user_defined_options.key?("jruby")
       contents["max_concurrent_connections"] = user_defined_options["max_concurrent_connections"] || 20
       contents["ruby_version"] =  user_defined_options["ruby_version"]    || "1.8"
+      %w(api_port api_keystore api_keystore_password
+         api_truststore api_truststore_password
+         api_need_client_auth).each do |key|
+         contents[key] = user_defined_options[key]
+       end
 
       @keys = contents.keys.sort
 
