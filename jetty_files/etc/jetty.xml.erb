@@ -28,6 +28,34 @@
 
     <% unless @settings.https_port.to_s.empty? %>
     <Call name="addConnector">
+      <% if @settings.mutual_ssl %>
+      <Arg>
+        <New class="org.eclipse.jetty.http.ssl.SslContextFactory">
+          <Set name="keyStore"><%= @settings.keyStore %></Set>
+          <Set name="keyStorePassword"><%= @settings.keyStorePassword %></Set>
+          <Set name="keyStoreType"><%= @settings.keyStoreType %></Set>
+          <Set name="trustStore"><%= @settings.trustStore %></Set>
+          <Set name="trustStorePassword"><%= @settings.trustStorePassword %></Set>
+          <Set name="trustStoreType"><%= @settings.trustStoreType %></Set>
+          <Set name="wantClientAuth"><%= @settings.wantClientAuth %></Set>
+          <Set name="CrlPath"><%= @settings.CrlPath%></Set>
+          <Set name="validateCerts"><%= @settings.validateCerts %></Set>
+          <Set name="validatePeerCerts"><%= @settings.validatePeerCerts %></Set>
+          <!-- Using RC4 to avoid the Rizzo/Duong attack on block ciphers. -->
+          <Set name="IncludeCipherSuites">
+            <Array type="java.lang.String">
+              <Item>TLS_ECDHE_ECDSA_WITH_RC4_128_SHA</Item>
+              <Item>TLS_ECDHE_RSA_WITH_RC4_128_SHA</Item>
+              <Item>TLS_ECDH_ECDSA_WITH_RC4_128_SHA</Item>
+              <Item>TLS_ECDH_RSA_WITH_RC4_128_SHA</Item>
+              <Item>SSL_RSA_WITH_RC4_128_SHA</Item>
+            </Array>
+          </Set>
+        </New>
+      </Arg>
+      <Set name="port"><%=@settings.https_port%></Set>
+      <Set name="maxIdleTime">30000</Set>
+      <% else %>
       <Arg>
         <New class="org.eclipse.jetty.server.ssl.SslSelectChannelConnector">
           <Set name="port"><%=@settings.https_port%></Set>
@@ -47,6 +75,7 @@
           <Set name="keystoreType">PKCS12</Set>
         </New>
       </Arg>
+      <% end %>
     </Call>
     <% end %>
 
