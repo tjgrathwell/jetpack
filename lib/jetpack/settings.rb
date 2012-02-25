@@ -30,7 +30,7 @@ module Jetpack
       if contents["mutual_ssl"]
         %w(keyStore keyStorePassword keyStoreType trustStore
            trustStorePassword trustStoreType wantClientAuth CrlPath
-           validateCerts validatePeerCerts).each do |key|
+           validateCerts validatePeerCerts ssl_port).each do |key|
           contents[key] = user_defined_options[key]
         end
       end
