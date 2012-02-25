@@ -26,6 +26,14 @@ module Jetpack
       contents["ruby_version"] =  user_defined_options["ruby_version"]    || "1.8"
       contents["app_type"]     =  user_defined_options["app_type"]        || "rails"
       contents["environment"]  =  user_defined_options["environment"]     || nil
+      contents["mutual_ssl"] =    user_defined_options["mutual_ssl"]      || false
+      if contents["mutual_ssl"]
+        %w(keyStore keyStorePassword keyStoreType trustStore
+           trustStorePassword trustStoreType wantClientAuth CrlPath
+           validateCerts validatePeerCerts).each do |key|
+          contents[key] = user_defined_options[key]
+        end
+      end
 
       @keys = contents.keys.sort
 
