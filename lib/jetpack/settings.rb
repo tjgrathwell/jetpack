@@ -24,6 +24,14 @@ module Jetpack
       contents["jruby"] =         user_defined_options["jruby"]           if user_defined_options.key?("jruby")
       contents["max_concurrent_connections"] = user_defined_options["max_concurrent_connections"] || 20
       contents["ruby_version"] =  user_defined_options["ruby_version"]    || "1.8"
+      contents["mutual_ssl"] =    user_defined_options["mutual_ssl"]      || false
+      if contents["mutual_ssl"]
+        %w(keyStore keyStorePassword keyStoreType trustStore
+           trustStorePassword trustStoreType wantClientAuth CrlPath
+           validateCerts validatePeerCerts).each do |key|
+          contents[key] = user_defined_options[key]
+        end
+      end
 
       @keys = contents.keys.sort
 
