@@ -29,7 +29,7 @@ module Jetpack
       contents["keystore_type"]              = user_defined_options["keystore_type"]              || "PKCS12"
       contents["keystore"]                   = user_defined_options["keystore"]                   || nil
       contents["keystore_password"]          = user_defined_options["keystore_password"]          || nil
-
+      contents["bundle_without"]             = user_defined_options["bundle_without"]             || ["test", "cucumber"]
       @keys = contents.keys.sort
 
       super(contents)
