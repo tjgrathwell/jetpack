@@ -51,6 +51,7 @@ Some other settings you might care about:
     keystore_type: JCEKS
     keystore: /data/app/secrets/mystore.jceks
     keystore_password: sekret
+    bundle_without: [test, cucumber]
 
 Run Jetpack:
 
