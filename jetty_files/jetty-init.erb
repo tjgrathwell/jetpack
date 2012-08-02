@@ -11,8 +11,6 @@ JAVA_OPTIONS="<%=@settings.java_options%>"
 JETTY_HOME=<%=@settings.app_root%>/vendor/jetty
 JETTY_RUN=<%=File.dirname(@settings.jetty_pid_path)%>
 JETTY_LOGS=$WEB_ROOT/log
-# Avoid unnecessary su call if we're already the app user
-test `whoami` != <%=@settings.app_user%> && JETTY_USER=<%=@settings.app_user%>
 
 <% if @settings.environment %>
 source <%=@settings.environment%>
