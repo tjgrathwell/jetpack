@@ -14,7 +14,6 @@ module Jetpack
     def initialize(project_dir, user_defined_options)
       contents                               = {}
       contents["app_root"]                   = user_defined_options["app_root"]                   || File.expand_path(project_dir)
-      contents["app_user"]                   = user_defined_options["app_user"]                   || Etc.getpwuid(File.stat(contents["app_root"]).uid).name
       contents["java_options"]               = user_defined_options["java_options"]               || "-Xmx2048m"
       contents["https_port"]                 = user_defined_options["https_port"]                 if user_defined_options.key?("https_port")
       contents["http_port"]                  = user_defined_options["http_port"]                  if user_defined_options.key?("http_port")
